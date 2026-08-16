@@ -58,7 +58,7 @@ if gh_mirror release view "$RELEASE_TAG" --repo "$MIRROR_REPO" >/dev/null 2>&1; 
 fi
 
 if [ -n "$current_sha" ] && { [ "$current_sha" = "$short_sha" ] || [ "$current_sha" = "$source_sha" ]; }; then
-  echo "Already up to date (SOURCE_SHA=${current_sha}). Nothing to do."
+  echo "Already up to date SOURCE_SHA=${current_sha}. Nothing to do."
   exit 0
 fi
 
@@ -69,7 +69,7 @@ echo "==> Extracting..."
 unzip -q -o "$workdir/artifact.zip" -d "$workdir/out"
 
 amd64=$(find "$workdir/out" -type f -name "$AMD64_NAME" | head -n1)
-arm64=$(find "$workdir/out" -type f -name "$ARM64_NAME" | head -n1"
+arm64=$(find "$workdir/out" -type f -name "$ARM64_NAME" | head -n1)
 
 if [ -z "$amd64" ] || [ -z "$arm64" ]; then
   echo "Missing binaries in artifact. Contents:" >&2
@@ -95,7 +95,7 @@ Only the latest build is kept in this repository.
 EOF
 )
 
-echo "==> Publishing release ${RELEASE_TAG} (name=${short_sha})..."
+echo "==> Publishing release ${RELEASE_TAG} name=${short_sha}..."
 
 if gh_mirror release view "$RELEASE_TAG" --repo "$MIRROR_REPO" >/dev/null 2>&1; then
   # Replace assets: delete old files then upload fresh ones.
@@ -120,4 +120,4 @@ else
     --latest
 fi
 
-echo "Done. Release ${RELEASE_TAG} → ${short_sha}"
+echo "Done. Release ${RELEASE_TAG} -> ${short_sha}"
